@@ -54,7 +54,8 @@ def test_live_with_mocked_api(monkeypatch, citydata, fixture_now):
     RecommendationResponse.model_validate(j)
     assert j["data_status"] == "live"
     assert len(j["recommendations"]) == 13
-    assert len(j["sources"]) == 2 and all(s["updated_at"] for s in j["sources"])
+    assert len(j["sources"]) == 3 and all(s["updated_at"] for s in j["sources"])
+    assert any("한국체육산업개발" in s["name"] for s in j["sources"])
     assert j["events"] and not any(e["is_sample"] for e in j["events"])
 
 
