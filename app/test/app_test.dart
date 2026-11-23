@@ -6,8 +6,11 @@ import 'package:http/testing.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:olpark_run/api.dart';
 import 'package:olpark_run/app_state.dart';
+import 'package:olpark_run/location.dart';
 import 'package:olpark_run/main.dart';
 import 'package:olpark_run/theme.dart';
+
+import 'fakes.dart';
 
 Map<String, dynamic> _response({bool unsafeTop = false}) => {
       'generated_at': '2026-11-23T18:00:00+09:00',
@@ -41,7 +44,8 @@ Map<String, dynamic> _response({bool unsafeTop = false}) => {
       'disclaimer': '혼잡도는 공원 단위입니다.',
     };
 
-AppState _state(http.Client client) => AppState(api: ApiClient(client: client, baseUrl: 'http://test'));
+AppState _state(http.Client client, {LocationSource? location}) =>
+    AppState(api: ApiClient(client: client, baseUrl: 'http://test'), location: location ?? FakeLocation());
 
 MockClient _backend({bool unsafeTop = false, int status = 200}) => MockClient((req) async {
       if (status != 200) return http.Response('boom', status);
@@ -99,20 +103,50 @@ void main() {
     expect(find.text('오늘 목표'), findsNothing);
   });
 
-  testWidgets('run screen counts time and pauses', (tester) async {
-    await _pump(tester, _state(_backend()));
+  testWidgets('run with GPS shows kilometres, pace and a finish summary', (tester) async {
+    final gps = FakeLocation();
+    await _pump(tester, _state(_backend(), location: gps));
     await tester.tap(find.text('시작'));
+    await tester.pump();
     // 스톱워치가 0.5초마다 다시 그려서 pumpAndSettle 대신 시간을 정해 진행
     await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('킬로미터'), findsOneWidget);
+    expect(find.text('GPS로 기록 중'), findsOneWidget);
+    gps.controller.add(fix(0, 0));
+    gps.controller.add(fix(0.0009, 30));
+    gps.controller.add(fix(0.0018, 60));
     await tester.pump(const Duration(milliseconds: 500));
-    expect(find.text('달린 시간'), findsOneWidget);
-    expect(find.text('—'), findsWidgets); // 거리·페이스는 지어내지 않음
+    expect(find.text('0.20'), findsOneWidget); // 200m
+    expect(find.text('4.09'), findsOneWidget); // 남은 km (4.29 - 0.20)
     await tester.tap(find.bySemanticsLabel('일시정지'));
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('일시정지됨'), findsOneWidget);
-    expect(find.text('끝내기'), findsOneWidget);
     await tester.tap(find.text('끝내기'));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('수고했어요!'), findsOneWidget);
+    expect(find.text('0.20 km'), findsOneWidget);
+    await tester.tap(find.text('확인'));
     await tester.pumpAndSettle();
     expect(find.text('시작'), findsOneWidget);
+  });
+
+  testWidgets('run without location permission falls back to time only', (tester) async {
+    final gps = FakeLocation(LocationAccess.denied);
+    await _pump(tester, _state(_backend(), location: gps));
+    await tester.tap(find.text('시작'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('달린 시간'), findsOneWidget);
+    expect(find.text('위치 권한이 없어 시간만 기록해요'), findsOneWidget);
+    expect(find.text('—'), findsWidgets); // 거리·페이스는 지어내지 않음
+    await tester.tap(find.text('위치 켜기'));
+    expect(gps.settingsOpened, 1);
+    await tester.tap(find.bySemanticsLabel('일시정지'));
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.tap(find.text('끝내기'));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('위치 기록 없음'), findsOneWidget);
+    await tester.tap(find.text('확인'));
+    await tester.pumpAndSettle();
   });
 }

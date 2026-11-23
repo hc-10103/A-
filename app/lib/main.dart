@@ -42,7 +42,7 @@ class _AppShellState extends State<AppShell> {
     if (next != null) await widget.state.setGoal(next);
   }
 
-  void _start(Course course) => Navigator.of(context).push(MaterialPageRoute(builder: (_) => RunScreen(course: course)));
+  void _start(Course course) => Navigator.of(context).push(MaterialPageRoute(builder: (_) => RunScreen(course: course, location: widget.state.location)));
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -81,7 +81,7 @@ class _HistoryPlaceholder extends StatelessWidget {
               SizedBox(height: 12),
               Text('기록은 준비 중이에요', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
               SizedBox(height: 6),
-              Text('위치 연동을 붙이면 달린 거리와 페이스를 여기에 모아 보여드려요.', textAlign: TextAlign.center, style: TextStyle(fontSize: 15, color: C.muted)),
+              Text('러닝을 끝내면 거리·시간·페이스 요약을 보여드려요. 기록을 모아 보는 기능은 다음 단계예요.', textAlign: TextAlign.center, style: TextStyle(fontSize: 15, color: C.muted)),
             ]),
           ),
         ),

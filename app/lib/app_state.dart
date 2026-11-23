@@ -1,13 +1,19 @@
 import 'package:flutter/foundation.dart';
 
 import 'api.dart';
+import 'location.dart';
 import 'models.dart';
 
 /// 앱 전체 상태: 오늘 목표 + 추천 결과. 화면들은 이 객체를 듣기만 한다.
 class AppState extends ChangeNotifier {
-  AppState({ApiClient? api}) : api = api ?? ApiClient();
+  AppState({ApiClient? api, LocationSource? location})
+      : api = api ?? ApiClient(),
+        location = location ?? const GeolocatorSource();
 
   final ApiClient api;
+
+  /// 러닝 중 위치 (테스트에서는 가짜로 바꾼다)
+  final LocationSource location;
 
   Goal goal = const Goal();
 
