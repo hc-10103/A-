@@ -6,6 +6,7 @@
   · 올림픽공원 장소명/코드는 인증키로 아직 확인하지 못함 → SEOUL_CITYDATA_AREA 로 설정
 - 에어코리아 미세먼지 예보 어댑터: 서울 권역 일 단위 예보로 이후 시간대 대기질을 채움 (data.go.kr 키 필요)
 - 한국체육산업개발 데이터: app/kspo.py (2025 공연 기록 집계 파일)
+- KOPIS 오늘 공연 일정: app/kopis.py (KOPIS_API_KEY)
 
 원칙: 데이터가 없으면 None 으로 두고 data_status 로 알린다. 임의 값으로 채우지 않는다.
 """
@@ -79,7 +80,10 @@ def load_events(target: date, demo: bool) -> list[dict]:
         return load_sample_events(target)
     bundle = SeoulCityDataAdapter().fetch()
     alerts = bundle.alerts if target == now_kst().date() else []
-    return alerts + filter_events_by_date(bundle.events or [], target)
+    from . import kopis
+
+    shows = kopis.KopisClient().shows_on(target) or []
+    return alerts + [kopis.to_event(s, target) for s in shows] + filter_events_by_date(bundle.events or [], target)
 
 
 def filter_events_by_date(events: list[dict], target: date) -> list[dict]:
