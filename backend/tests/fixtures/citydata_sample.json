@@ -1,0 +1,322 @@
+{
+ "_note": "서울시 실시간 도시데이터 sample 키(광화문·덕수궁) 실제 응답을 2026-11-23 19:30 KST에 받아 테스트에 필요한 필드만 남긴 것",
+ "list_total_count": 1,
+ "RESULT": {
+  "RESULT.CODE": "INFO-000",
+  "RESULT.MESSAGE": "정상 처리되었습니다."
+ },
+ "CITYDATA": {
+  "AREA_NM": "광화문·덕수궁",
+  "AREA_CD": "POI009",
+  "LIVE_PPLTN_STTS": [
+   {
+    "AREA_NM": "광화문·덕수궁",
+    "AREA_CD": "POI009",
+    "AREA_CONGEST_LVL": "여유",
+    "PPLTN_TIME": "2026-11-23 19:05",
+    "FCST_YN": "Y",
+    "FCST_PPLTN": [
+     {
+      "FCST_TIME": "2026-11-23 20:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "22000",
+      "FCST_PPLTN_MAX": "24000"
+     },
+     {
+      "FCST_TIME": "2026-11-23 21:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "14000",
+      "FCST_PPLTN_MAX": "16000"
+     },
+     {
+      "FCST_TIME": "2026-11-23 22:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "10000",
+      "FCST_PPLTN_MAX": "12000"
+     },
+     {
+      "FCST_TIME": "2026-11-23 23:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "6500",
+      "FCST_PPLTN_MAX": "7000"
+     },
+     {
+      "FCST_TIME": "2026-11-24 00:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "4000",
+      "FCST_PPLTN_MAX": "4500"
+     },
+     {
+      "FCST_TIME": "2026-11-24 01:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "3000",
+      "FCST_PPLTN_MAX": "3500"
+     },
+     {
+      "FCST_TIME": "2026-11-24 02:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "2500",
+      "FCST_PPLTN_MAX": "3000"
+     },
+     {
+      "FCST_TIME": "2026-11-24 03:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "2500",
+      "FCST_PPLTN_MAX": "3000"
+     },
+     {
+      "FCST_TIME": "2026-11-24 04:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "2500",
+      "FCST_PPLTN_MAX": "3000"
+     },
+     {
+      "FCST_TIME": "2026-11-24 05:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "3000",
+      "FCST_PPLTN_MAX": "3500"
+     },
+     {
+      "FCST_TIME": "2026-11-24 06:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "3500",
+      "FCST_PPLTN_MAX": "4000"
+     },
+     {
+      "FCST_TIME": "2026-11-24 07:00",
+      "FCST_CONGEST_LVL": "여유",
+      "FCST_PPLTN_MIN": "6000",
+      "FCST_PPLTN_MAX": "6500"
+     }
+    ]
+   }
+  ],
+  "WEATHER_STTS": [
+   {
+    "WEATHER_TIME": "2026-11-23 19:30",
+    "TEMP": "9.4",
+    "PRECIPITATION": "-",
+    "PRECPT_TYPE": "없음",
+    "PCP_MSG": "비 또는 눈 소식이 없어요.",
+    "AIR_IDX": "보통",
+    "AIR_IDX_MVL": "56.0",
+    "PM10_INDEX": "좋음",
+    "PM25_INDEX": "보통",
+    "FCST24HOURS": [
+     {
+      "FCST_DT": "202611232000",
+      "TEMP": "8",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "30",
+      "SKY_STTS": "흐림"
+     },
+     {
+      "FCST_DT": "202611232100",
+      "TEMP": "7",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "30",
+      "SKY_STTS": "구름많음"
+     },
+     {
+      "FCST_DT": "202611232200",
+      "TEMP": "7",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "30",
+      "SKY_STTS": "구름많음"
+     },
+     {
+      "FCST_DT": "202611232300",
+      "TEMP": "5",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "30",
+      "SKY_STTS": "구름많음"
+     },
+     {
+      "FCST_DT": "202611240000",
+      "TEMP": "4",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "구름많음"
+     },
+     {
+      "FCST_DT": "202611240100",
+      "TEMP": "3",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611240200",
+      "TEMP": "2",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611240300",
+      "TEMP": "1",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611240400",
+      "TEMP": "0",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611240500",
+      "TEMP": "0",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611240600",
+      "TEMP": "-1",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611240700",
+      "TEMP": "-1",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611240800",
+      "TEMP": "-1",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611240900",
+      "TEMP": "0",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611241000",
+      "TEMP": "1",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611241100",
+      "TEMP": "1",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611241200",
+      "TEMP": "2",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611241300",
+      "TEMP": "2",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611241400",
+      "TEMP": "3",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611241500",
+      "TEMP": "3",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611241600",
+      "TEMP": "2",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611241700",
+      "TEMP": "1",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611241800",
+      "TEMP": "-1",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     },
+     {
+      "FCST_DT": "202611241900",
+      "TEMP": "-1",
+      "PRECIPITATION": "-",
+      "PRECPT_TYPE": "없음",
+      "RAIN_CHANCE": "0",
+      "SKY_STTS": "맑음"
+     }
+    ]
+   }
+  ],
+  "EVENT_STTS": [
+   {
+    "EVENT_NM": "[서울갤러리] 내친구서울관 기획전시 《서울탐험대》",
+    "EVENT_PERIOD": "2026-11-20~2027-02-28",
+    "EVENT_PLACE": "서울시청 지하1층 내친구서울관 1/2관 사이 로비",
+    "URL": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=160249&menuNo=200009"
+   },
+   {
+    "EVENT_NM": "[광화문광장] 2026 빛모락 스토리투어",
+    "EVENT_PERIOD": "2026-11-20~2026-12-05",
+    "EVENT_PLACE": "광화문 라운지",
+    "URL": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=160256&menuNo=200011"
+   },
+   {
+    "EVENT_NM": "[교보아트스페이스] 동양화에 기운 Hearts Inclined to Ink",
+    "EVENT_PERIOD": "2026-11-03~2026-12-13",
+    "EVENT_PLACE": "교보아트스페이스",
+    "URL": "https://culture.seoul.go.kr/culture/culture/cultureEvent/view.do?cultcode=160113&menuNo=200009"
+   }
+  ]
+ }
+}

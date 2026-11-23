@@ -52,11 +52,20 @@
 
 해당 날짜 행사·공지. `date` 생략 시 오늘(KST). 실데이터 모드는 소스가 정해지기 전까지 `[]`.
 
+## 실데이터 모드 동작 (서울시 도시데이터)
+
+- 현재 시각 항목은 관측값(`WEATHER_TIME`, `PPLTN_TIME`), 이후 12시간은 예보값(`FCST24HOURS`, `FCST_PPLTN`)을 씁니다.
+- 강수 형태(`PRECPT_TYPE`)가 '없음'이 아니면 `weather`에 강수 형태(비/눈 등)를 넣어 안전 규칙이 적용됩니다.
+- 대기질은 현재값만 있어 첫 시간에만 넣고 이후는 `null`입니다.
+- 관측 시각이 90분 이상 지났거나 날씨·인구 중 하나가 빠지면 `data_status: "partial"`, 이유는 `disclaimer`에 붙습니다.
+- 같은 요청은 5분 동안 캐시합니다.
+
 ## 외부 데이터 연결 상태
 
 | 소스 | 파일 | 상태 |
 |---|---|---|
-| 서울시 실시간 도시데이터 (날씨·인구/혼잡 예측) | `data_sources.py` `SeoulCityDataAdapter` | 작성됨, **필드명 미검증**. 장소명 미확정 |
+| 서울시 실시간 도시데이터 (날씨·인구/혼잡 예측·행사) | `data_sources.py` `SeoulCityDataAdapter` | 응답 구조 검증 완료 (2026-11-23 sample 키). 올림픽공원 장소명 미확정 |
 | 시간별 대기질 예보 | — | 미정. 현재값만 첫 시간에 반영, 이후 `null` |
 | KSPO | `data_sources.py` `KspoAdapter` | 미구현 |
-| 행사·공지 | `shared/events.sample.json` | 샘플만 있음 |
+| 행사 | 데모: `shared/events.sample.json` / 실: 도시데이터 `EVENT_STTS` (기간으로 날짜 필터) | 실 모드 연결됨 |
+| 공원 공지 | — | 미정 |
