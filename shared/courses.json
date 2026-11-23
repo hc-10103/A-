@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "note": "올림픽공원 공식 산책·러닝 코스 이름과 거리. 설명·좌표·지도 링크는 공식 안내로 확인 후 채운다 (담당: C).",
+    "coordinates_status": "미확보 — 근거 없는 좌표를 넣지 않는다",
+    "verified_fields": ["name", "distance_km"]
+  },
+  "courses": [
+    {"id": "lakeside-road", "name": "호반의 길", "distance_km": 1.30, "description": "가장 짧은 공식 코스입니다. 가벼운 산책이나 몸풀기에 맞습니다.", "map_url": null},
+    {"id": "earthen-wall-road", "name": "토성의 길", "distance_km": 2.21, "description": "2km 내외 운동에 맞는 공식 코스입니다.", "map_url": null},
+    {"id": "youth-road", "name": "젊음의 길", "distance_km": 3.15, "description": "3km 내외 운동에 맞는 공식 코스입니다.", "map_url": null},
+    {"id": "memory-road", "name": "추억의 길", "distance_km": 3.35, "description": "중간 거리 운동에 맞는 공식 코스입니다.", "map_url": null},
+    {"id": "lovers-road", "name": "연인의 길", "distance_km": 4.29, "description": "공식 코스 중 가장 깁니다. 4~5km 운동에 맞습니다.", "map_url": null}
+  ]
+}

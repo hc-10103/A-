@@ -1,0 +1,30 @@
+{
+  "_meta": {
+    "note": "데모 전용 샘플. 실제 행사가 아니다. date가 \"DEMO\"인 항목은 데모 모드에서 요청 날짜와 관계없이 표시된다.",
+    "is_sample": true
+  },
+  "events": [
+    {
+      "id": "sample-concert",
+      "type": "event",
+      "title": "[샘플] 야간 공연 (예시 데이터)",
+      "date": "DEMO",
+      "start_time": "19:30",
+      "end_time": "21:30",
+      "location": "공원 내 공연장 (예시)",
+      "note": "공연 전후로 공원 출입구 주변이 붐빌 수 있습니다. 코스 혼잡을 뜻하지 않습니다.",
+      "is_sample": true
+    },
+    {
+      "id": "sample-notice",
+      "type": "notice",
+      "title": "[샘플] 공원 이용 안내 (예시 데이터)",
+      "date": "DEMO",
+      "start_time": null,
+      "end_time": null,
+      "location": null,
+      "note": "실제 이용 수칙은 올림픽공원 공식 안내를 확인하세요.",
+      "is_sample": true
+    }
+  ]
+}
