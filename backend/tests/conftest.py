@@ -20,6 +20,7 @@ def _no_real_network_keys(monkeypatch):
     from app import data_sources as ds
 
     ds._cache.clear()
+    ds._fail_until.clear()
     from app import kopis
 
     kopis._cache.clear()

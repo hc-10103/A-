@@ -29,6 +29,7 @@ FACILITY_ID = "FC001247"
 FACILITY_NAME = "올림픽공원"
 SOURCE_NAME = "(재)예술경영지원센터 공연예술통합전산망(www.kopis.or.kr)"
 CACHE_TTL_SEC = 1800
+TIMEOUT = httpx.Timeout(3.0, connect=2.0)
 WEEKDAY_NAMES = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]
 CAUTION_BEFORE = timedelta(hours=2)
 CAUTION_AFTER = timedelta(hours=3)
@@ -141,14 +142,16 @@ class KopisClient:
         hit = _cache.get(cache_key)
         if hit and time.monotonic() - hit[0] < CACHE_TTL_SEC:
             return hit[1]  # type: ignore[return-value]
-        r = httpx.get(f"{BASE}/{path}", params={"service": self.key, **params}, timeout=15)
+        r = httpx.get(f"{BASE}/{path}", params={"service": self.key, **params}, timeout=TIMEOUT)
         r.raise_for_status()
         _cache[cache_key] = (time.monotonic(), r.text)
         return r.text
 
     def shows_on(self, day: date) -> Optional[list[Show]]:
         """day 에 올림픽공원에서 열리는 공연. 키가 없거나 실패하면 None (= 정보 없음)."""
-        if not self.key:
+        from .data_sources import backoff_active, mark_failed
+
+        if not self.key or backoff_active("kopis"):
             return None
         try:
             ymd = day.strftime("%Y%m%d")
@@ -158,6 +161,7 @@ class KopisClient:
             return [s for s in shows if s]
         except Exception as exc:  # noqa: BLE001
             log.warning("KOPIS fetch failed: %s", exc)
+            mark_failed("kopis")
             return None
 
 
@@ -190,7 +194,8 @@ def caution_for(t: datetime, shows: list[Show]) -> list[str]:
     for s in shows:
         for hhmm in s.times:
             h, m = map(int, hhmm.split(":"))
-            start = t.replace(hour=h, minute=m, second=0, microsecond=0)
+            # '24:00' 같은 표기도 그날 0시 기준으로 더해서 처리 (→ 다음날 00:00)
+            start = t.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(hours=h, minutes=m)
             if start - CAUTION_BEFORE <= t <= start + CAUTION_AFTER:
                 where = s.hall or "공원 내 공연장"
                 size = f"(약 {s.seats:,}석)" if s.seats else ""
