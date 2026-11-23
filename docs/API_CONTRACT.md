@@ -28,7 +28,7 @@
 | `recommendations[].rating` | `좋음` \| `보통` \| `주의` \| `야외운동 비권장` |
 | `recommendations[].conditions` | `weather`, `air_quality`, `park_crowding` — 없으면 `null` |
 | `recommendations[].reasons[]` / `cautions[]` | 추천 이유 / 주의 문구 |
-| `course` | 목표 거리에 가장 가까운 공식 코스 (`map_url`은 미확보 시 `null`) |
+| `course` | 목표 거리에 가장 가까운 공식 코스. `description`에 공식 안내의 구간 요약을 포함하고 `map_url`은 KSPO 공식 코스 안내 페이지를 가리킵니다. 좌표를 지오코딩해 만든 경로는 아직 제공하지 않습니다. |
 | `events[]` | 행사·공지. 없으면 `[]`. 샘플이면 `is_sample: true` |
 | `sources[]` | `{name, updated_at}` |
 | `disclaimer` | 점수·혼잡도 범위 안내 + 데이터 상태 메모 |
