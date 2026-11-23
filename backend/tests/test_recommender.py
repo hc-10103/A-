@@ -65,3 +65,15 @@ def test_pick_course_closest_distance():
     assert pick_course(courses, 3)["id"] == "c"
     assert pick_course(courses, 5)["id"] == "d"
     assert pick_course([], 3) is None
+
+
+def test_missing_preferred_slot_adds_notice():
+    hours = [h(i) for i in range(1, 7)]  # 18~23시: 저녁만
+    recs = build_recommendations(hours, "run", "morning", NOW)
+    assert all(r["cautions"][0] == "선택한 시간대(아침)가 향후 12시간 안에 없어 다른 시간대를 보여줍니다" for r in recs)
+
+
+def test_present_preferred_slot_has_no_notice():
+    recs = build_recommendations([h(1), h(2)], "run", "evening", NOW)
+    recs += build_recommendations([h(1)], "run", "any", NOW)
+    assert not any("선택한 시간대" in c for r in recs for c in r["cautions"])

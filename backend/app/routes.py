@@ -3,7 +3,7 @@ from datetime import date
 from fastapi import APIRouter, Query
 
 from . import data_sources as ds
-from .recommender import build_recommendations, pick_course
+from .recommender import build_recommendations, pick_course, preference_unavailable_note
 from .schemas import Course, Event, RecommendationRequest, RecommendationResponse
 
 router = APIRouter(prefix="/api")
@@ -34,9 +34,13 @@ def recommendations(req: RecommendationRequest) -> dict:
     now = ds.now_kst()
     bundle = ds.get_conditions(demo=req.demo_mode)
     recs = build_recommendations(bundle.hours, req.activity, req.time_preference, now)
+    notes = list(bundle.notes)
+    pref_note = preference_unavailable_note(bundle.hours, req.time_preference)
+    if pref_note:
+        notes.insert(0, pref_note + ".")
     disclaimer = DISCLAIMER
-    if bundle.notes:
-        disclaimer += " " + " ".join(bundle.notes)
+    if notes:
+        disclaimer += " " + " ".join(notes)
     return {
         "generated_at": now.isoformat(timespec="seconds"),
         "mode": "demo" if req.demo_mode else "live",
