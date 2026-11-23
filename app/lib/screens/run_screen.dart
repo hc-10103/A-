@@ -178,7 +178,7 @@ class _RunScreenState extends State<RunScreen> with WidgetsBindingObserver {
     final bigLabel = gps ? '킬로미터' : '달린 시간';
     return SafeArea(
       child: Column(children: [
-        const SizedBox(height: 96),
+        const SizedBox(height: 84), // 위쪽 '옆으로 밀면…' 안내 자리
         Row(children: gps
             ? [
                 _Stat(value: formatDuration(_t.elapsed), label: '시간'),
@@ -192,23 +192,27 @@ class _RunScreenState extends State<RunScreen> with WidgetsBindingObserver {
               ]),
         const SizedBox(height: 16),
         _GpsStatus(tracker: _t, onOpenSettings: () => widget.location.openSettings(_t.access!)),
-        const Spacer(),
+        const SizedBox(height: 8),
         if (_t.paused) const Text('일시정지됨', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: C.lime)),
-        Semantics(
-          label: '$bigLabel $big',
-          child: FittedBox(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(big, style: numStyle(gps ? 136 : 120, color: _t.paused ? C.brandSub : C.lime)),
+        // 큰 숫자는 남는 높이를 다 쓰고, 화면이 짧으면(작은 폰·큰 글씨) 그만큼 줄어든다
+        Expanded(
+          child: Semantics(
+            label: '$bigLabel $big',
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(big, style: numStyle(gps ? 136 : 120, color: _t.paused ? C.brandSub : C.lime)),
+              ),
             ),
           ),
         ),
-        const SizedBox(height: 4),
-        Text(bigLabel, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: C.brandSub)),
+        Text(bigLabel, maxLines: 1, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: C.brandSub)),
+        const SizedBox(height: 12),
+        Text('${course.name} ${course.distanceKm.toStringAsFixed(2)}km', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 14, color: C.brandSub)),
         const SizedBox(height: 16),
-        Text('${course.name} ${course.distanceKm.toStringAsFixed(2)}km', style: const TextStyle(fontSize: 14, color: C.brandSub)),
-        const Spacer(flex: 2),
-        const SizedBox(height: 190),
+        // 아래 버튼(일시정지·기록/지도) 자리
+        const SizedBox(height: 180),
       ]),
     );
   }

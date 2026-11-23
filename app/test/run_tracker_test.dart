@@ -83,6 +83,23 @@ void main() {
     t.dispose();
   });
 
+  test('stream error falls back to time-only, retry listens again', () async {
+    final src = FakeLocation();
+    final t = RunTracker(src);
+    await t.start();
+    src.controller.addError(StateError('WAKE_LOCK'));
+    await flush();
+    expect(t.gpsOn, isFalse);
+    expect(t.running, isTrue);
+    await t.retryAccess();
+    src.controller.add(fix(0, 0));
+    src.controller.add(fix(0.0009, 30));
+    await flush();
+    expect(t.gpsOn, isTrue);
+    expect(t.meters, closeTo(100, 2));
+    t.dispose();
+  });
+
   test('formatPace', () {
     expect(formatPace(null), '—');
     expect(formatPace(const Duration(minutes: 8, seconds: 44)), "8'44\"");

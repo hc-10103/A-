@@ -80,9 +80,19 @@ class RunTracker extends ChangeNotifier {
 
   void _listen() {
     _sub = source.fixes().listen(_onFix, onError: (_) {
+      // 스트림을 못 열었거나 끊김: 시간만 기록하고, '위치 켜기'로 다시 시도할 수 있게 구독을 비운다
       gpsError = true;
-      notifyListeners();
+      _stopStream();
+      if (!_disposed) notifyListeners();
     });
+  }
+
+  /// 플랫폼 쪽 스트림이 이미 닫혀 있으면 cancel이 예외를 던진다 (No active stream to cancel) — 무시한다.
+  void _stopStream() {
+    final sub = _sub;
+    _sub = null;
+    _last = null;
+    sub?.cancel().catchError((Object _) {});
   }
 
   void _onFix(GeoFix f) {
@@ -122,15 +132,14 @@ class RunTracker extends ChangeNotifier {
 
   void finish() {
     _watch.stop();
-    _sub?.cancel();
-    _sub = null;
+    _stopStream();
     notifyListeners();
   }
 
   @override
   void dispose() {
     _disposed = true;
-    _sub?.cancel();
+    _stopStream();
     super.dispose();
   }
 }

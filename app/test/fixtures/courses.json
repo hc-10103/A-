@@ -1,0 +1,37 @@
+[
+    {
+        "id": "lakeside-road",
+        "name": "호반의 길",
+        "distance_km": 1.3,
+        "description": "평화의광장 → 곰말다리 → 소마미술관 → 평화의광장. 공식 코스 중 가장 짧은 코스입니다.",
+        "map_url": "https://www.ksponco.or.kr/menu.es?mid=a20202000000"
+    },
+    {
+        "id": "earthen-wall-road",
+        "name": "토성의 길",
+        "distance_km": 2.21,
+        "description": "몽촌토성 순환로 코스입니다. 공식 안내는 깔딱고개와 백제 유적·잔디밭 조망을 특징으로 소개합니다.",
+        "map_url": "https://www.ksponco.or.kr/menu.es?mid=a20202000000"
+    },
+    {
+        "id": "memory-road",
+        "name": "추억의 길",
+        "distance_km": 3.35,
+        "description": "곰말다리 → 몽촌토성 중심 → 움집터전시관 → 야생화학습장 → 몽촌토성 순환 → 피크닉장 → 곰말다리. 몽촌토성 주변을 두 개의 원으로 도는 코스입니다.",
+        "map_url": "https://www.ksponco.or.kr/menu.es?mid=a20202000000"
+    },
+    {
+        "id": "lovers-road",
+        "name": "연인의 길",
+        "distance_km": 4.29,
+        "description": "곰말다리 → 몽촌토성 중심 → 서울역사편찬원 → 88마당 → 삼거리매점 → 몽촌토성 중심 → 피크닉장 → 소마미술관 → 평화의광장 → 곰말다리. 88호수와 몽촌토성 주변을 잇는 코스입니다.",
+        "map_url": "https://www.ksponco.or.kr/menu.es?mid=a20202000000"
+    },
+    {
+        "id": "youth-road",
+        "name": "젊음의 길",
+        "distance_km": 3.15,
+        "description": "올림픽공원 외곽의 자전거 순환도로 코스입니다. 공식 안내에서 달리기 대회 장소로도 소개합니다.",
+        "map_url": "https://www.ksponco.or.kr/menu.es?mid=a20202000000"
+    }
+]

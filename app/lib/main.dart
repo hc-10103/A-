@@ -50,7 +50,6 @@ class _AppShellState extends State<AppShell> {
           HomeScreen(
             state: widget.state,
             onOpenGoal: _openGoal,
-            onOpenCourses: () => setState(() => _tab = 1),
             onStart: _start,
           ),
           RouteScreen(state: widget.state, onStart: _start),

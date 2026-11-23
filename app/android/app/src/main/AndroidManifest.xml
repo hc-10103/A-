@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!-- geolocator가 화면 꺼진 동안 기록하려고 잡는 wake lock -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <application
         android:usesCleartextTraffic="true"
         android:label="OLPARK RUN"

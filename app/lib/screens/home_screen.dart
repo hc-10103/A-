@@ -7,11 +7,10 @@ import '../widgets/course_map.dart';
 import '../widgets/info_sheet.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.state, required this.onOpenGoal, required this.onOpenCourses, required this.onStart});
+  const HomeScreen({super.key, required this.state, required this.onOpenGoal, required this.onStart});
 
   final AppState state;
   final VoidCallback onOpenGoal;
-  final VoidCallback onOpenCourses;
   final void Function(Course course) onStart;
 
   @override
@@ -60,14 +59,17 @@ class _HomeScreenState extends State<HomeScreen> {
               bottom: false,
               child: RefreshIndicator(
                 onRefresh: s.load,
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    _Header(state: s),
-                    _Tabs(onCourses: widget.onOpenCourses),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                      child: _body(context, s, data, safety),
+                // 화면이 길면 시작 버튼이 아래로 붙고, 짧거나 글자가 크면 스크롤된다
+                child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
+                    SliverToBoxAdapter(child: _Header(state: s)),
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                        child: _body(context, s, data, safety),
+                      ),
                     ),
                   ],
                 ),
@@ -115,7 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SizedBox(
-          height: 176,
+          // 카드 내용이 대부분 글자라, 휴대폰 글자 크기 설정만큼 카드도 키운다
+          height: MediaQuery.textScalerOf(context).scale(184),
           child: PageView(
             controller: _pager,
             onPageChanged: (i) => setState(() => _card = i),
@@ -149,22 +152,24 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         _SourcesLine(data: data),
-        const SizedBox(height: 40),
+        const Spacer(),
+        const SizedBox(height: 24),
+        // 시작 버튼이 어떤 코스로 출발하는지 (바꾸려면 아래 '코스' 탭)
+        Text(
+          course == null ? '추천 코스 정보 없음' : '${course.name} ${course.distanceKm.toStringAsFixed(2)}km',
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: C.body),
+        ),
+        const SizedBox(height: 14),
         _StartControls(
           goalKm: s.goal.km,
           onSettings: () => showInfoSheet(context, s),
           onGoal: widget.onOpenGoal,
           onStart: course == null ? null : () => widget.onStart(course),
         ),
-        const SizedBox(height: 14),
-        Center(
-          child: _Pill(
-            icon: Icons.route,
-            text: course == null ? '${s.goal.km}km 목표 · 코스 정보 없음' : '${s.goal.km}km 목표 · ${course.name} ${course.distanceKm.toStringAsFixed(2)}km',
-            onTap: widget.onOpenGoal,
-          ),
-        ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 24),
       ],
     );
   }
@@ -189,32 +194,6 @@ class _Header extends StatelessWidget {
             tooltip: '데이터 출처와 설정',
             onPressed: () => showInfoSheet(context, state),
             icon: const Icon(Icons.info_outline),
-          ),
-        ]),
-      );
-}
-
-class _Tabs extends StatelessWidget {
-  const _Tabs({required this.onCourses});
-  final VoidCallback onCourses;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
-        child: Row(children: [
-          Container(
-            height: 44,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: C.ink, width: 3))),
-            child: const Text('바로 달리기', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
-          ),
-          const SizedBox(width: 24),
-          InkWell(
-            onTap: onCourses,
-            child: const SizedBox(
-              height: 44,
-              child: Center(child: Text('추천 코스', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: C.muted))),
-            ),
           ),
         ]),
       );
@@ -434,35 +413,6 @@ class _SmallCircle extends StatelessWidget {
         const SizedBox(height: 6),
         Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: C.body)),
       ]);
-}
-
-class _Pill extends StatelessWidget {
-  const _Pill({required this.icon, required this.text, required this.onTap});
-  final IconData icon;
-  final String text;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) => Material(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(99),
-        elevation: 2,
-        shadowColor: const Color(0x22111613),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(99),
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-            child: Row(mainAxisSize: MainAxisSize.min, children: [
-              Icon(icon, size: 20),
-              const SizedBox(width: 8),
-              Flexible(child: Text(text, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500))),
-              const SizedBox(width: 4),
-              const Icon(Icons.chevron_right, size: 20, color: C.muted),
-            ]),
-          ),
-        ),
-      );
 }
 
 class _StatusCard extends StatelessWidget {

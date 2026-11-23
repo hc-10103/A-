@@ -70,7 +70,8 @@ void main() {
     expect(find.text('오늘 19:00에 달리기 좋아요'), findsOneWidget);
     expect(find.text('시작'), findsOneWidget);
     expect(find.text('DEMO'), findsOneWidget);
-    expect(find.textContaining('5km 목표 · 연인의 길'), findsOneWidget);
+    expect(find.text('연인의 길 4.29km'), findsOneWidget); // 시작 버튼 위 코스 이름
+    expect(find.text('5km'), findsOneWidget); // 목표 버튼
     expect(find.textContaining('샘플 데이터'), findsWidgets); // 출처가 홈에 보임
   });
 
