@@ -43,7 +43,11 @@ def recommendations(req: RecommendationRequest) -> dict:
         "data_status": bundle.data_status,
         "recommendations": recs,
         "course": pick_course(ds.load_courses(), req.target_distance_km),
-        "events": ds.load_events(now.date(), demo=req.demo_mode),
+        "events": (
+            ds.load_sample_events(now.date())
+            if req.demo_mode
+            else ds.filter_events_by_date(bundle.events or [], now.date())
+        ),
         "sources": bundle.sources,
         "disclaimer": disclaimer,
     }

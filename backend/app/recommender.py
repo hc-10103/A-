@@ -12,7 +12,7 @@ from datetime import datetime
 from .data_sources import HourlyCondition
 
 # ---- 초기 설계값 (팀에서 조정) -------------------------------------------
-WEATHER_PENALTY = {"맑음": 0, "구름조금": 0, "구름많음": 5, "흐림": 10}
+WEATHER_PENALTY = {"맑음": 0, "구름조금": 0, "구름많음": 5, "흐림": 10, "강수 없음": 0}
 HAZARD_WEATHER_KEYWORDS = ("비", "눈", "소나기", "뇌우", "우박", "폭우", "폭설")
 AIR_PENALTY = {"좋음": 0, "보통": 10, "나쁨": 35}
 HAZARD_AIR = {"매우나쁨", "매우 나쁨"}
@@ -48,7 +48,10 @@ def score_hour(h: HourlyCondition, activity: str) -> dict:
     else:
         p = WEATHER_PENALTY.get(h.weather, 10)
         score -= p
-        reasons.append(f"날씨가 {h.weather}입니다" if p == 0 else f"날씨가 {h.weather}로 다소 불리합니다")
+        if h.weather == "강수 없음":
+            reasons.append("현재 강수가 없습니다 (하늘 상태 정보 없음)")
+        else:
+            reasons.append(f"날씨가 {h.weather}입니다" if p == 0 else f"날씨가 {h.weather}로 다소 불리합니다")
 
     # 기온
     if h.temperature_c is not None:
