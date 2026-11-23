@@ -17,6 +17,8 @@ import json
 import logging
 import os
 import time
+from concurrent.futures import Future, ThreadPoolExecutor
+from concurrent.futures import TimeoutError as FutureTimeout
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -32,6 +34,34 @@ KST = ZoneInfo("Asia/Seoul")
 SHARED_DIR = Path(__file__).resolve().parents[2] / "shared"
 
 FORECAST_HOURS = 12
+
+# ---- 외부 호출 시간 제한 (프론트 타임아웃 10초 안에 응답하기 위함) -------------
+# httpx 타임아웃은 연결/읽기 단계별로 따로 걸리므로 단계별로 지정한다.
+SEOUL_TIMEOUT = httpx.Timeout(5.0, connect=2.5)
+AIR_TIMEOUT = httpx.Timeout(4.0, connect=2.0)
+FAIL_BACKOFF_SEC = 300  # 실패한 외부 API 는 5분 동안 다시 부르지 않는다
+fetch_pool = ThreadPoolExecutor(max_workers=8, thread_name_prefix="olpark-fetch")
+_fail_until: dict[str, float] = {}
+
+
+def backoff_active(name: str) -> bool:
+    return time.monotonic() < _fail_until.get(name, 0)
+
+
+def mark_failed(name: str) -> None:
+    _fail_until[name] = time.monotonic() + FAIL_BACKOFF_SEC
+
+
+def wait_or_none(fut: Future, timeout: float):
+    """timeout 안에 끝나지 않거나 실패하면 None. 늦게 끝난 결과는 캐시에 남아 다음 요청에 쓰인다."""
+    try:
+        return fut.result(timeout=max(0.0, timeout))
+    except FutureTimeout:
+        log.warning("external fetch exceeded time budget")
+        return None
+    except Exception as exc:  # noqa: BLE001
+        log.warning("external fetch failed: %s", exc)
+        return None
 CACHE_TTL_SEC = 300            # 서울시 인구 데이터 갱신 주기(5분)에 맞춘 캐시
 STALE_AFTER = timedelta(minutes=90)  # 이보다 오래된 관측값은 '오래됨'으로 표시 (초기 설계값)
 
@@ -109,9 +139,12 @@ def get_conditions(demo: bool) -> ConditionBundle:
             data_status="sample",
             sources=[{"name": "샘플 데이터 (데모 — 실제 관측값 아님)", "updated_at": now.isoformat(timespec="seconds")}],
         )
+    # 서울시와 에어코리아를 동시에 부른다 (순서대로 부르면 대기 시간이 더해진다)
+    deadline = time.monotonic() + 7.5
+    air_future = fetch_pool.submit(AirKoreaForecastAdapter().fetch, now)
     bundle = SeoulCityDataAdapter().fetch()
     if bundle.hours:
-        apply_air_forecast(bundle, AirKoreaForecastAdapter().fetch(now))
+        apply_air_forecast(bundle, wait_or_none(air_future, deadline - time.monotonic()))
     return bundle
 
 
@@ -142,10 +175,13 @@ class SeoulCityDataAdapter:
                 data_status="unavailable",
                 notes=["SEOUL_OPEN_API_KEY 또는 SEOUL_CITYDATA_AREA 가 설정되지 않아 실데이터를 가져오지 못했습니다."],
             )
+        if backoff_active("seoul"):
+            return ConditionBundle(hours=[], data_status="unavailable", notes=["서울시 도시데이터 호출이 최근 실패해 잠시 후 다시 시도합니다."])
         try:
             payload = self._get_json()
         except Exception as exc:  # noqa: BLE001 — 외부 API 실패는 상태로만 전달
             log.warning("Seoul citydata fetch failed: %s", exc)
+            mark_failed("seoul")
             return ConditionBundle(hours=[], data_status="unavailable", notes=["서울시 도시데이터 호출에 실패했습니다."])
         return parse_citydata(payload, now_kst())
 
@@ -154,7 +190,7 @@ class SeoulCityDataAdapter:
         hit = _cache.get(url)
         if hit and time.monotonic() - hit[0] < CACHE_TTL_SEC:
             return hit[1]
-        resp = httpx.get(url, timeout=10)
+        resp = httpx.get(url, timeout=SEOUL_TIMEOUT)
         resp.raise_for_status()
         payload = resp.json()
         _cache[url] = (time.monotonic(), payload)
@@ -314,12 +350,13 @@ class AirKoreaForecastAdapter:
         self.key = os.getenv("DATA_GO_KR_API_KEY", "").strip()
 
     def fetch(self, now: datetime) -> Optional[AirForecast]:
-        if not self.key:
+        if not self.key or backoff_active("airkorea"):
             return None
         try:
             items = self._get_items(now.date())
         except Exception as exc:  # noqa: BLE001
             log.warning("AirKorea forecast fetch failed: %s", exc)
+            mark_failed("airkorea")
             return None
         return parse_dust_forecast(items, AIR_FORECAST_REGION)
 
@@ -329,7 +366,7 @@ class AirKoreaForecastAdapter:
         if hit and time.monotonic() - hit[0] < AIR_CACHE_TTL_SEC:
             return hit[1]["items"]
         params = {"serviceKey": self.key, "returnType": "json", "searchDate": day.isoformat(), "numOfRows": 100}
-        resp = httpx.get(self.URL, params=params, timeout=10)
+        resp = httpx.get(self.URL, params=params, timeout=AIR_TIMEOUT)
         resp.raise_for_status()
         body = resp.json().get("response") or {}
         header = body.get("header") or {}
