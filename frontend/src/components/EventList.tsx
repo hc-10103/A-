@@ -14,7 +14,7 @@ export default function EventList({ events }: { events: ParkEvent[] }) {
         sorted.map((e) => (
           <article key={e.id} className="card event">
             <header>
-              <span className={`tag ${e.type}`}>{e.type === "event" ? "행사" : "공지"}</span>
+              <span className={`tag tag-${e.type}`}>{e.type === "event" ? "행사" : "공지"}</span>
               <strong>{e.title}</strong>
               {e.is_sample && <span className="badge">샘플</span>}
             </header>

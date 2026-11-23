@@ -57,7 +57,9 @@ function normalize(raw: unknown): RecommendationResponse {
     generated_at: r.generated_at ?? "",
     mode: r.mode === "live" ? "live" : "demo",
     data_status: r.data_status ?? "unavailable",
-    recommendations: arr<RecommendationResponse["recommendations"][number]>(r.recommendations).map((x) => ({
+    recommendations: arr<RecommendationResponse["recommendations"][number]>(r.recommendations)
+      .filter((x) => x && typeof x === "object" && typeof x.time_iso === "string")
+      .map((x) => ({
       ...x,
       reasons: arr<string>(x.reasons),
       cautions: arr<string>(x.cautions),
@@ -74,8 +76,15 @@ function normalize(raw: unknown): RecommendationResponse {
   };
 }
 
-export const getRecommendations = async (body: RecommendationRequest) =>
-  normalize(await request<unknown>("/api/recommendations", { method: "POST", body: JSON.stringify(body) }));
+export const getRecommendations = async (body: RecommendationRequest) => {
+  const raw = await request<unknown>("/api/recommendations", { method: "POST", body: JSON.stringify(body) });
+  try {
+    return normalize(raw);
+  } catch (e) {
+    if (e instanceof ApiError) throw e;
+    throw new ApiError("invalid", "서버 응답 형식이 올바르지 않습니다");
+  }
+};
 
 export const getCourses = () => request<Course[]>("/api/courses");
 

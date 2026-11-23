@@ -60,7 +60,8 @@ export default function HomePage() {
   useEffect(() => {
     if (focusResults && resultsRef.current) {
       resultsRef.current.focus({ preventScroll: true });
-      resultsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+      resultsRef.current.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
       setFocusResults(false);
     }
   }, [focusResults]);

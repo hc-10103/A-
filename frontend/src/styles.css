@@ -173,7 +173,7 @@ button:disabled { cursor: wait; }
 
 /* 행사 */
 .tag { font-size: 0.75rem; border: 1px solid var(--line); border-radius: 6px; padding: 0 6px; }
-.tag.notice { border-color: var(--caution); color: var(--caution-fg); }
+.tag-notice { border-color: var(--caution); color: var(--caution-fg); }
 
 /* 출처 */
 .sources ul { padding-left: 18px; margin: 4px 0; }
