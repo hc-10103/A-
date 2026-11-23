@@ -9,3 +9,5 @@ node_modules/
 dist/
 .DS_Store
 *.tsbuildinfo
+# 공공데이터 원본 다운로드 (집계 결과만 shared/ 에 커밋)
+backend/data_raw/

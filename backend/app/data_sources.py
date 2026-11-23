@@ -5,7 +5,7 @@
   · 응답 구조는 2026-11-23 공개 sample 키(광화문·덕수궁) 실제 응답으로 확인함
   · 올림픽공원 장소명/코드는 인증키로 아직 확인하지 못함 → SEOUL_CITYDATA_AREA 로 설정
 - 에어코리아 미세먼지 예보 어댑터: 서울 권역 일 단위 예보로 이후 시간대 대기질을 채움 (data.go.kr 키 필요)
-- KSPO 어댑터: 미구현 (어떤 데이터셋을 쓸지 미정)
+- 한국체육산업개발 데이터: app/kspo.py (2025 공연 기록 집계 파일)
 
 원칙: 데이터가 없으면 None 으로 두고 data_status 로 알린다. 임의 값으로 채우지 않는다.
 """
@@ -406,12 +406,6 @@ def _parse_issue_time(value) -> Optional[datetime]:
         return None
 
 
-class KspoAdapter:
-    """국민체육진흥공단(KSPO) 데이터 어댑터 — 미구현.
-    어떤 데이터셋(예: 시설·프로그램 정보)을 쓸지 팀에서 확정한 뒤 구현한다."""
-
-    def fetch(self) -> None:
-        raise NotImplementedError("KSPO 어댑터는 아직 구현되지 않았습니다 (데이터셋 미정).")
 
 
 # ---------------------------------------------------------------- helpers

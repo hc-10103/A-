@@ -1,8 +1,9 @@
-from datetime import date
+from datetime import date, datetime
 
 from fastapi import APIRouter, Query
 
 from . import data_sources as ds
+from . import kspo
 from .recommender import build_recommendations, pick_course, preference_unavailable_note
 from .schemas import Course, Event, RecommendationRequest, RecommendationResponse
 
@@ -34,6 +35,15 @@ def recommendations(req: RecommendationRequest) -> dict:
     now = ds.now_kst()
     bundle = ds.get_conditions(demo=req.demo_mode)
     recs = build_recommendations(bundle.hours, req.activity, req.time_preference, now)
+    # 한국체육산업개발 2025 공연 기록: 점수에는 넣지 않고 주의 문구로만 붙인다
+    for r in recs:
+        caution = kspo.concert_caution(datetime.fromisoformat(r["time_iso"]))
+        if caution:
+            r["cautions"].append(caution)
+    sources = list(bundle.sources)
+    kspo_src = kspo.source_entry()
+    if kspo_src and bundle.hours:
+        sources.append(kspo_src)
     notes = list(bundle.notes)
     pref_note = preference_unavailable_note(bundle.hours, req.time_preference)
     if pref_note:
@@ -52,6 +62,6 @@ def recommendations(req: RecommendationRequest) -> dict:
             if req.demo_mode
             else bundle.alerts + ds.filter_events_by_date(bundle.events or [], now.date())
         ),
-        "sources": bundle.sources,
+        "sources": sources,
         "disclaimer": disclaimer,
     }

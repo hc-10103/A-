@@ -1,0 +1,871 @@
+{
+ "_meta": {
+  "source": "한국체육산업개발(주) 올림픽공원 2025 차량입출차, 공연, 날씨정보 등 연계 데이터",
+  "provider_api": "문화공공데이터광장 API_CPM_009 (culture.go.kr id=675)",
+  "period": "2025-01-01 ~ 2025-12-31",
+  "hours": 7803,
+  "days": 358,
+  "concert_hours": 773,
+  "distinct_shows": 148,
+  "collected_at": "2026-11-18 00:30:06",
+  "weekday": "0=월 … 6=일",
+  "note": "2025년 기록 기반 참고 정보이며 올해 공연 일정이 아니다. 관람객 수는 원본 값 그대로.",
+  "generated_by": "backend/scripts/build_kspo_concert_pattern.py"
+ },
+ "slots": {
+  "0": {
+   "0": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "1": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "2": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "3": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "4": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "5": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "6": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "7": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "8": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "9": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "10": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "11": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "12": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "13": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "14": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "15": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "16": {
+    "days": 48,
+    "concert_days": 1,
+    "avg_audience": 2500
+   },
+   "17": {
+    "days": 47,
+    "concert_days": 1,
+    "avg_audience": 2500
+   },
+   "18": {
+    "days": 47,
+    "concert_days": 1,
+    "avg_audience": 2500
+   },
+   "19": {
+    "days": 47,
+    "concert_days": 2,
+    "avg_audience": 6274
+   },
+   "20": {
+    "days": 46,
+    "concert_days": 1,
+    "avg_audience": 2500
+   },
+   "21": {
+    "days": 46,
+    "concert_days": 1,
+    "avg_audience": 10049
+   },
+   "22": {
+    "days": 48,
+    "concert_days": 1,
+    "avg_audience": 10049
+   },
+   "23": {
+    "days": 44,
+    "concert_days": 0,
+    "avg_audience": null
+   }
+  },
+  "1": {
+   "0": {
+    "days": 43,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "1": {
+    "days": 42,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "2": {
+    "days": 40,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "3": {
+    "days": 44,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "4": {
+    "days": 44,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "5": {
+    "days": 45,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "6": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "7": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "8": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "9": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "10": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "11": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "12": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "13": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "14": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "15": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "16": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "17": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "18": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "19": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "20": {
+    "days": 45,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "21": {
+    "days": 44,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "22": {
+    "days": 44,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "23": {
+    "days": 44,
+    "concert_days": 0,
+    "avg_audience": null
+   }
+  },
+  "2": {
+   "0": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "1": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "2": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "3": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "4": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "5": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "6": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "7": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "8": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "9": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "10": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "11": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "12": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "13": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "14": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "15": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "16": {
+    "days": 48,
+    "concert_days": 1,
+    "avg_audience": 2700
+   },
+   "17": {
+    "days": 48,
+    "concert_days": 1,
+    "avg_audience": 2700
+   },
+   "18": {
+    "days": 48,
+    "concert_days": 1,
+    "avg_audience": 2700
+   },
+   "19": {
+    "days": 47,
+    "concert_days": 1,
+    "avg_audience": 2700
+   },
+   "20": {
+    "days": 47,
+    "concert_days": 1,
+    "avg_audience": 2700
+   },
+   "21": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "22": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "23": {
+    "days": 45,
+    "concert_days": 0,
+    "avg_audience": null
+   }
+  },
+  "3": {
+   "0": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "1": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "2": {
+    "days": 45,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "3": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "4": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "5": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "6": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "7": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "8": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "9": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "10": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "11": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "12": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "13": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "14": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "15": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "16": {
+    "days": 47,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "17": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "18": {
+    "days": 48,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "19": {
+    "days": 48,
+    "concert_days": 1,
+    "avg_audience": 4382
+   },
+   "20": {
+    "days": 47,
+    "concert_days": 1,
+    "avg_audience": 4382
+   },
+   "21": {
+    "days": 46,
+    "concert_days": 1,
+    "avg_audience": 4382
+   },
+   "22": {
+    "days": 46,
+    "concert_days": 2,
+    "avg_audience": 7216
+   },
+   "23": {
+    "days": 45,
+    "concert_days": 1,
+    "avg_audience": 4382
+   }
+  },
+  "4": {
+   "0": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "1": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "2": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "3": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "4": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "5": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "6": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "7": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "8": {
+    "days": 50,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "9": {
+    "days": 49,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "10": {
+    "days": 48,
+    "concert_days": 2,
+    "avg_audience": 7700
+   },
+   "11": {
+    "days": 48,
+    "concert_days": 2,
+    "avg_audience": 7700
+   },
+   "12": {
+    "days": 46,
+    "concert_days": 2,
+    "avg_audience": 7700
+   },
+   "13": {
+    "days": 47,
+    "concert_days": 3,
+    "avg_audience": 6000
+   },
+   "14": {
+    "days": 49,
+    "concert_days": 2,
+    "avg_audience": 8800
+   },
+   "15": {
+    "days": 48,
+    "concert_days": 1,
+    "avg_audience": 2600
+   },
+   "16": {
+    "days": 47,
+    "concert_days": 1,
+    "avg_audience": 5867
+   },
+   "17": {
+    "days": 47,
+    "concert_days": 1,
+    "avg_audience": 5867
+   },
+   "18": {
+    "days": 46,
+    "concert_days": 14,
+    "avg_audience": 7772
+   },
+   "19": {
+    "days": 46,
+    "concert_days": 31,
+    "avg_audience": 8923
+   },
+   "20": {
+    "days": 46,
+    "concert_days": 31,
+    "avg_audience": 8923
+   },
+   "21": {
+    "days": 47,
+    "concert_days": 32,
+    "avg_audience": 8627
+   },
+   "22": {
+    "days": 47,
+    "concert_days": 31,
+    "avg_audience": 9093
+   },
+   "23": {
+    "days": 47,
+    "concert_days": 16,
+    "avg_audience": 7156
+   }
+  },
+  "5": {
+   "0": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "1": {
+    "days": 45,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "2": {
+    "days": 45,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "3": {
+    "days": 44,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "4": {
+    "days": 45,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "5": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "6": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "7": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "8": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "9": {
+    "days": 47,
+    "concert_days": 1,
+    "avg_audience": 15000
+   },
+   "10": {
+    "days": 47,
+    "concert_days": 2,
+    "avg_audience": 15000
+   },
+   "11": {
+    "days": 47,
+    "concert_days": 3,
+    "avg_audience": 11889
+   },
+   "12": {
+    "days": 47,
+    "concert_days": 6,
+    "avg_audience": 10411
+   },
+   "13": {
+    "days": 45,
+    "concert_days": 7,
+    "avg_audience": 9268
+   },
+   "14": {
+    "days": 46,
+    "concert_days": 10,
+    "avg_audience": 8381
+   },
+   "15": {
+    "days": 47,
+    "concert_days": 10,
+    "avg_audience": 7161
+   },
+   "16": {
+    "days": 46,
+    "concert_days": 23,
+    "avg_audience": 7957
+   },
+   "17": {
+    "days": 46,
+    "concert_days": 45,
+    "avg_audience": 12258
+   },
+   "18": {
+    "days": 46,
+    "concert_days": 45,
+    "avg_audience": 12719
+   },
+   "19": {
+    "days": 46,
+    "concert_days": 45,
+    "avg_audience": 12596
+   },
+   "20": {
+    "days": 46,
+    "concert_days": 44,
+    "avg_audience": 12819
+   },
+   "21": {
+    "days": 48,
+    "concert_days": 43,
+    "avg_audience": 11515
+   },
+   "22": {
+    "days": 45,
+    "concert_days": 9,
+    "avg_audience": 9415
+   },
+   "23": {
+    "days": 45,
+    "concert_days": 3,
+    "avg_audience": 12167
+   }
+  },
+  "6": {
+   "0": {
+    "days": 45,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "1": {
+    "days": 44,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "2": {
+    "days": 42,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "3": {
+    "days": 44,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "4": {
+    "days": 45,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "5": {
+    "days": 45,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "6": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "7": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "8": {
+    "days": 46,
+    "concert_days": 0,
+    "avg_audience": null
+   },
+   "9": {
+    "days": 47,
+    "concert_days": 1,
+    "avg_audience": 15000
+   },
+   "10": {
+    "days": 45,
+    "concert_days": 2,
+    "avg_audience": 15000
+   },
+   "11": {
+    "days": 47,
+    "concert_days": 3,
+    "avg_audience": 11889
+   },
+   "12": {
+    "days": 45,
+    "concert_days": 5,
+    "avg_audience": 10493
+   },
+   "13": {
+    "days": 46,
+    "concert_days": 7,
+    "avg_audience": 9268
+   },
+   "14": {
+    "days": 45,
+    "concert_days": 9,
+    "avg_audience": 9209
+   },
+   "15": {
+    "days": 45,
+    "concert_days": 25,
+    "avg_audience": 8276
+   },
+   "16": {
+    "days": 45,
+    "concert_days": 44,
+    "avg_audience": 12229
+   },
+   "17": {
+    "days": 48,
+    "concert_days": 47,
+    "avg_audience": 13006
+   },
+   "18": {
+    "days": 45,
+    "concert_days": 44,
+    "avg_audience": 12747
+   },
+   "19": {
+    "days": 45,
+    "concert_days": 44,
+    "avg_audience": 12534
+   },
+   "20": {
+    "days": 47,
+    "concert_days": 40,
+    "avg_audience": 11046
+   },
+   "21": {
+    "days": 47,
+    "concert_days": 11,
+    "avg_audience": 8458
+   },
+   "22": {
+    "days": 45,
+    "concert_days": 5,
+    "avg_audience": 13202
+   },
+   "23": {
+    "days": 47,
+    "concert_days": 2,
+    "avg_audience": 16500
+   }
+  }
+ }
+}
