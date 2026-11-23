@@ -12,6 +12,15 @@ FIXTURE = Path(__file__).parent / "fixtures" / "citydata_sample.json"
 FIXTURE_NOW = datetime(2026, 11, 23, 19, 35, tzinfo=KST)
 
 
+@pytest.fixture(autouse=True)
+def _no_real_network_keys(monkeypatch):
+    """로컬 .env 에 실제 키가 있어도 테스트가 외부 API 를 부르지 않게 한다."""
+    monkeypatch.delenv("DATA_GO_KR_API_KEY", raising=False)
+    from app import data_sources as ds
+
+    ds._cache.clear()
+
+
 @pytest.fixture
 def citydata() -> dict:
     return copy.deepcopy(json.loads(FIXTURE.read_text(encoding="utf-8")))

@@ -50,7 +50,7 @@ def recommendations(req: RecommendationRequest) -> dict:
         "events": (
             ds.load_sample_events(now.date())
             if req.demo_mode
-            else ds.filter_events_by_date(bundle.events or [], now.date())
+            else bundle.alerts + ds.filter_events_by_date(bundle.events or [], now.date())
         ),
         "sources": bundle.sources,
         "disclaimer": disclaimer,

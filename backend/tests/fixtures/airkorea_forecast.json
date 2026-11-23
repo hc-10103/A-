@@ -1,0 +1,11 @@
+{
+  "_note": "공공데이터포털 15073861 '대기질 예보통보 조회' 명세의 응답 항목으로 만든 테스트용 예시. 실제 응답 아님.",
+  "items": [
+    {"informCode": "PM10", "informData": "2026-11-23", "dataTime": "2026-11-23 05시 발표", "informGrade": "서울 : 나쁨,제주 : 좋음,전남 : 좋음"},
+    {"informCode": "PM10", "informData": "2026-11-23", "dataTime": "2026-11-23 17시 발표", "informGrade": "서울 : 보통,제주 : 좋음,전남 : 좋음"},
+    {"informCode": "PM10", "informData": "2026-11-24", "dataTime": "2026-11-23 17시 발표", "informGrade": "서울 : 좋음,제주 : 좋음"},
+    {"informCode": "PM25", "informData": "2026-11-23", "dataTime": "2026-11-23 17시 발표", "informGrade": "서울: 좋음, 제주: 보통"},
+    {"informCode": "PM25", "informData": "2026-11-24", "dataTime": "2026-11-23 17시 발표", "informGrade": "서울: 매우나쁨, 제주: 보통"},
+    {"informCode": "PM10", "informData": "2026-11-25", "dataTime": "2026-11-23 17시 발표", "informGrade": "제주 : 좋음"}
+  ]
+}

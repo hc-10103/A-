@@ -12,7 +12,7 @@ from datetime import datetime
 from .data_sources import HourlyCondition
 
 # ---- 초기 설계값 (팀에서 조정) -------------------------------------------
-WEATHER_PENALTY = {"맑음": 0, "구름조금": 0, "구름많음": 5, "흐림": 10, "강수 없음": 0}
+WEATHER_PENALTY = {"맑음": 0, "구름조금": 0, "구름많음": 5, "흐림": 10, "강수 없음": 5}  # 강수 없음 = 하늘 상태 모름 → 중간값
 HAZARD_WEATHER_KEYWORDS = ("비", "눈", "소나기", "뇌우", "우박", "폭우", "폭설")
 AIR_PENALTY = {"좋음": 0, "보통": 10, "나쁨": 35}
 HAZARD_AIR = {"매우나쁨", "매우 나쁨"}
@@ -52,7 +52,7 @@ def score_hour(h: HourlyCondition, activity: str) -> dict:
         if h.weather == "강수 없음":
             reasons.append("현재 강수가 없습니다 (하늘 상태 정보 없음)")
         else:
-            reasons.append(f"날씨가 {h.weather}입니다" if p == 0 else f"날씨가 {h.weather}로 다소 불리합니다")
+            reasons.append(f"날씨가 {h.weather}입니다" if p == 0 else f"날씨가 {h.weather}이라 다소 불리합니다")
 
     # 기온
     if h.temperature_c is not None:
@@ -69,11 +69,13 @@ def score_hour(h: HourlyCondition, activity: str) -> dict:
         cautions.append("대기질 정보가 없습니다")
     elif h.air_quality in HAZARD_AIR:
         hazard = True
-        reasons.append("대기질이 매우 나쁨으로 야외운동을 권장하지 않습니다")
+        label = "대기질(일 단위 예보)" if h.air_quality_is_forecast else "대기질"
+        reasons.append(f"{label}이 매우 나쁨으로 야외운동을 권장하지 않습니다")
     else:
         p = AIR_PENALTY.get(h.air_quality, 10)
         score -= p
-        reasons.append("대기질이 양호합니다" if p == 0 else f"대기질이 {h.air_quality}입니다")
+        label = "대기질(일 단위 예보)" if h.air_quality_is_forecast else "대기질"
+        reasons.append(f"{label}이 양호합니다" if p == 0 else f"{label}이 {h.air_quality}입니다")
 
     # 공원 단위 혼잡
     if h.park_crowding is None:
