@@ -64,7 +64,7 @@
 
 | 소스 | 파일 | 상태 |
 |---|---|---|
-| 서울시 실시간 도시데이터 (날씨·인구/혼잡 예측·행사) | `data_sources.py` `SeoulCityDataAdapter` | 응답 구조 검증 완료 (2026-11-23 sample 키). 올림픽공원 장소명 미확정 |
+| 서울시 실시간 도시데이터 (날씨·인구/혼잡 예측·행사) | `data_sources.py` `SeoulCityDataAdapter` | 응답 구조 검증 완료, 올림픽공원(POI127) 실호출 확인 (2026-11-23) |
 | 시간별 대기질 예보 | — | 미정. 현재값만 첫 시간에 반영, 이후 `null` |
 | KSPO | `data_sources.py` `KspoAdapter` | 미구현 |
 | 행사 | 데모: `shared/events.sample.json` / 실: 도시데이터 `EVENT_STTS` (기간으로 날짜 필터) | 실 모드 연결됨 |
