@@ -22,6 +22,7 @@ HOT_C, COLD_C = 33.0, -10.0  # 극한 기온 기준 (초기 설계값)
 MISSING_PENALTY = 5          # 항목 하나가 비어 있을 때 신뢰도 감점
 
 SLOTS = {"morning": range(5, 12), "afternoon": range(12, 18), "evening": range(18, 24)}
+SLOT_LABELS = {"morning": "아침", "afternoon": "오후", "evening": "저녁"}
 CROWD_SCOPE_CAUTION = "혼잡도는 공원 전체 기준이며 코스별 혼잡도를 뜻하지 않습니다"
 
 
@@ -107,11 +108,23 @@ def time_label(t: datetime, now: datetime) -> str:
     return f"{day} {t:%H:%M}"
 
 
+def preference_unavailable_note(hours: list[HourlyCondition], preference: str) -> str | None:
+    """선택한 시간대가 데이터 범위(현재~12시간) 안에 하나도 없으면 안내 문구를 돌려준다."""
+    if preference == "any" or not hours:
+        return None
+    if any(slot_of(h.time) == preference for h in hours):
+        return None
+    return f"선택한 시간대({SLOT_LABELS[preference]})가 향후 12시간 안에 없어 다른 시간대를 보여줍니다"
+
+
 def build_recommendations(hours: list[HourlyCondition], activity: str, preference: str, now: datetime) -> list[dict]:
+    missing_pref = preference_unavailable_note(hours, preference)
     items = []
     for h in hours:
         result = score_hour(h, activity)
         night = slot_of(h.time) is None
+        if missing_pref:
+            result["cautions"].insert(0, missing_pref)
         if night:
             result["cautions"].append("심야 시간대입니다. 공원 개방·조명 여부를 공식 안내로 확인하세요")
         items.append(

@@ -56,3 +56,11 @@ def test_live_with_mocked_api(monkeypatch, citydata, fixture_now):
     assert len(j["recommendations"]) == 13
     assert len(j["sources"]) == 2 and all(s["updated_at"] for s in j["sources"])
     assert j["events"] and not any(e["is_sample"] for e in j["events"])
+
+
+def test_preference_outside_window_is_explained(monkeypatch, fixture_now):
+    # 19:35 기준 향후 12시간(19시~다음날 07시)에는 오후가 없다
+    monkeypatch.setattr(ds, "now_kst", lambda: fixture_now)
+    j = client.post("/api/recommendations", json={**BODY, "time_preference": "afternoon"}).json()
+    assert "선택한 시간대(오후)가 향후 12시간 안에 없어" in j["disclaimer"]
+    assert j["recommendations"][0]["cautions"][0].startswith("선택한 시간대(오후)")
