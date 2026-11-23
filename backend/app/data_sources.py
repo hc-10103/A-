@@ -298,12 +298,13 @@ class AirForecast:
 class AirKoreaForecastAdapter:
     """한국환경공단 에어코리아 대기오염정보 — 대기질 예보통보 조회 (data.go.kr 15073861).
 
-    요청 변수·응답 항목은 공공데이터포털 명세로 확인했다 (searchDate, InformCode / informData, informGrade, dataTime).
-    ⚠ 실호출은 data.go.kr 키 발급 후 확인 필요. 키는 '일반 인증키(Decoding)'를 넣는다.
+    2026-11-23 실호출로 확인: searchDate 하루치에 대해 PM10·PM25 항목이 발표 시각별로 섞여 온다.
+    InformCode 를 줘도 전체 항목이 오므로 한 번만 호출하고, 코드는 파싱 단계에서 거른다.
+    키는 '일반 인증키(Decoding)'를 넣는다.
     """
 
     URL = "https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth"
-    CODES = ("PM10", "PM25")
+    CODES = ("PM10", "PM25")  # O3(오존) 예보는 쓰지 않는다
 
     def __init__(self) -> None:
         self.key = os.getenv("DATA_GO_KR_API_KEY", "").strip()
@@ -311,21 +312,19 @@ class AirKoreaForecastAdapter:
     def fetch(self, now: datetime) -> Optional[AirForecast]:
         if not self.key:
             return None
-        items: list[dict] = []
         try:
-            for code in self.CODES:
-                items += self._get_items(now.date(), code)
+            items = self._get_items(now.date())
         except Exception as exc:  # noqa: BLE001
             log.warning("AirKorea forecast fetch failed: %s", exc)
             return None
         return parse_dust_forecast(items, AIR_FORECAST_REGION)
 
-    def _get_items(self, day: date, code: str) -> list[dict]:
-        cache_key = f"airkorea|{day}|{code}"
+    def _get_items(self, day: date) -> list[dict]:
+        cache_key = f"airkorea|{day}"
         hit = _cache.get(cache_key)
         if hit and time.monotonic() - hit[0] < AIR_CACHE_TTL_SEC:
             return hit[1]["items"]
-        params = {"serviceKey": self.key, "returnType": "json", "searchDate": day.isoformat(), "InformCode": code}
+        params = {"serviceKey": self.key, "returnType": "json", "searchDate": day.isoformat(), "numOfRows": 100}
         resp = httpx.get(self.URL, params=params, timeout=10)
         resp.raise_for_status()
         body = resp.json().get("response") or {}
@@ -347,6 +346,8 @@ def parse_dust_forecast(items: list[dict], region: str) -> Optional[AirForecast]
         except ValueError:
             continue
         code = str(it.get("informCode") or "").strip()
+        if code not in AirKoreaForecastAdapter.CODES:
+            continue
         grade = _grade_for_region(it.get("informGrade"), region)
         issued = _parse_issue_time(it.get("dataTime"))
         if not grade or grade not in AIR_GRADE_ORDER or not code:

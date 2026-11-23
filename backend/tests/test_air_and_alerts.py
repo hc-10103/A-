@@ -96,3 +96,18 @@ def test_live_response_puts_alert_first_in_events(monkeypatch, citydata, fixture
     assert j["events"][0]["title"] == "[재난문자]" and j["events"][0]["note"] == "강풍 주의"
     assert j["recommendations"] and all(r["conditions"]["air_quality"] for r in j["recommendations"])
     assert "에어코리아" in j["disclaimer"]
+
+
+REAL = json.loads((Path(__file__).parent / "fixtures" / "airkorea_forecast_real.json").read_text(encoding="utf-8"))["items"]
+
+
+def test_real_response_parses_to_expected_grades():
+    fc = parse_dust_forecast(REAL, "서울")
+    # 11-23: PM10 최신(11시) 좋음 + PM2.5 최신(17시) 보통 → 보통
+    assert fc.grades == {date(2026, 11, 23): "보통", date(2026, 11, 24): "좋음", date(2026, 11, 25): "보통"}
+    assert fc.issued_at == datetime(2026, 11, 23, 17, tzinfo=KST)
+
+
+def test_ozone_forecast_is_ignored():
+    o3 = {"informCode": "O3", "informData": "2026-11-23", "dataTime": "2026-11-23 17시 발표", "informGrade": "서울 : 매우나쁨"}
+    assert parse_dust_forecast(REAL + [o3], "서울").grades[date(2026, 11, 23)] == "보통"

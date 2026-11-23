@@ -67,7 +67,7 @@
 | 소스 | 파일 | 상태 |
 |---|---|---|
 | 서울시 실시간 도시데이터 (날씨·인구/혼잡 예측·행사) | `data_sources.py` `SeoulCityDataAdapter` | 응답 구조 검증 완료, 올림픽공원(POI127) 실호출 확인 (2026-11-23) |
-| 대기질 예보 | `data_sources.py` `AirKoreaForecastAdapter` (data.go.kr 15073861) | 작성됨, 명세 기준. 실호출은 키 발급 후 확인 |
+| 대기질 예보 | `data_sources.py` `AirKoreaForecastAdapter` (data.go.kr 15073861) | 실호출 확인 (2026-11-23). `InformCode`와 무관하게 전체 항목이 와서 1회 호출 후 PM10·PM25만 사용 |
 | 재난문자 | `parse_disaster_messages` | 작성됨, 필드명 미검증 |
 | KSPO | `data_sources.py` `KspoAdapter` | 미구현 |
 | 행사 | 데모: `shared/events.sample.json` / 실: 도시데이터 `EVENT_STTS` (기간으로 날짜 필터) | 실 모드 연결됨 |
