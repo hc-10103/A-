@@ -8,7 +8,7 @@ import SafetyNotice from "../components/SafetyNotice";
 import SearchForm from "../components/SearchForm";
 import SourceInfo from "../components/SourceInfo";
 import StatusBanner from "../components/StatusBanner";
-import type { RecommendationRequest, RecommendationResponse } from "../types";
+import type { Course, RecommendationRequest, RecommendationResponse } from "../types";
 
 function errorHint(e: unknown): string {
   if (e instanceof ApiError) {
@@ -25,7 +25,12 @@ function errorHint(e: unknown): string {
 
 const same = (a: RecommendationRequest, b: RecommendationRequest) => JSON.stringify(a) === JSON.stringify(b);
 
-export default function HomePage() {
+interface Props {
+  onOpenRoute: (course: Course, target: number) => void;
+  onStartRun: (course: Course) => void;
+}
+
+export default function HomePage({ onOpenRoute, onStartRun }: Props) {
   const [form, setForm] = useState<RecommendationRequest>({
     activity: "run",
     target_distance_km: 3,
@@ -68,15 +73,18 @@ export default function HomePage() {
 
   const stale = data && lastReq && !same(form, lastReq);
   const recs = data?.recommendations ?? [];
+  const target = lastReq?.target_distance_km ?? form.target_distance_km;
+  const activityLabel = (lastReq ?? form).activity === "walk" ? "걷기" : "달리기";
 
   return (
-    <main className="container">
+    <main className={`container ${data?.course ? "has-cta" : ""}`}>
       <header className="hero">
-        <h1>
-          OLPARK RUN
-          {form.demo_mode && <span className="badge hero-badge">DEMO</span>}
-        </h1>
-        <p>올림픽공원에서 오늘 언제, 어느 코스로 운동할지 골라 드립니다.</p>
+        <div className="brand">
+          <span className="wordmark">OLPARK RUN</span>
+          {form.demo_mode && <span className="badge">DEMO</span>}
+        </div>
+        <h1>오늘 운동하기 좋은 시간</h1>
+        <p>운동·거리·시간대를 고르면 올림픽공원 공식 코스와 함께 추천해 드려요.</p>
       </header>
 
       <SearchForm value={form} onChange={setForm} onSubmit={submit} loading={loading} />
@@ -110,9 +118,21 @@ export default function HomePage() {
               <HourlyChart items={recs} bestIso={recs[0]?.time_iso} />
             </>
           )}
-          <CourseCard course={data.course} target={lastReq?.target_distance_km ?? form.target_distance_km} />
+          <CourseCard course={data.course} target={target} onOpenRoute={onOpenRoute} />
           <EventList events={data.events} />
           <SourceInfo data={data} />
+        </div>
+      )}
+
+      {data?.course && (
+        <div className="cta-bar">
+          <button type="button" className="cta" onClick={() => data.course && onStartRun(data.course)}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M7 4l13 8-13 8z" />
+            </svg>
+            {/* 공식 코스 이름은 모두 '~길'(받침 ㄹ)로 끝나 조사는 '로' */}
+            {data.course.name}로 {activityLabel}
+          </button>
         </div>
       )}
     </main>

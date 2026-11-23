@@ -29,6 +29,7 @@ function RecCard({ item, highlight = false }: { item: TimeRecommendation; highli
   const cautions = [...new Set(item.cautions)];
   return (
     <article className={`card rec ${tone} ${highlight ? "highlight" : ""}`}>
+      {highlight && <span className="hero-label">추천 시간</span>}
       <header>
         <span className="time">{item.time_label}</span>
         <span className={`rating ${tone}`}>{item.rating}</span>

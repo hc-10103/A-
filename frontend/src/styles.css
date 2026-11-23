@@ -195,3 +195,144 @@ button:disabled { cursor: wait; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* ===================================================================
+   러닝 앱 레이어 (디자인: 추천 → 코스 경로 → 러닝 중)
+   =================================================================== */
+:root {
+  --ground: #F4F6F1;
+  --ink: #0E1512;
+  --brand: #0F3D2A;      /* 추천 히어로 카드 */
+  --brand-sub: #B9CFC2;  /* 히어로 위 보조 글자 (대비 7:1+) */
+  --lime: #C8F24A;
+  --on-lime: #0B1A10;
+  --route: #0F6B42;
+  --num: "Archivo", "Noto Sans KR", system-ui, sans-serif;
+  --map-park: #D3E3CA; --map-fort: #C2D9B6; --map-water: #C7DDEA; --map-bg: #E3ECDD;
+  --map-label: #24302A; --map-halo: #E9F1E4;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #111513; --ink: #E6ECE8; --brand: #173326;
+    --route: #4FBF87;
+    --map-park: #1A2420; --map-fort: #1F2D26; --map-water: #1B2A33; --map-bg: #121815;
+    --map-label: #C9D3CD; --map-halo: #121815;
+  }
+}
+body { background: var(--ground); font-family: "Noto Sans KR", system-ui, -apple-system, sans-serif; }
+.container { max-width: 520px; padding-top: 40px; }
+.container.has-cta { padding-bottom: 120px; }
+
+/* 헤더 */
+.brand { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.wordmark { font-family: var(--num); font-style: italic; font-weight: 900; font-size: 18px; letter-spacing: 0.02em; color: var(--accent); }
+.hero h1 { color: var(--text); font-size: 28px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.25; display: block; }
+.hero p { margin-top: 6px; }
+
+/* 입력: 선택 칩은 진한 잉크색 */
+.chip.active { background: var(--ink); border-color: var(--ink); color: var(--ground); }
+
+/* 추천 히어로 카드 */
+.rec.highlight { background: var(--brand); border: 0; color: #FFFFFF; border-radius: 24px; padding: 20px; }
+.rec.highlight.danger { background: #5A1D16; }
+.rec.highlight .hero-label { font-size: 13px; color: var(--brand-sub); }
+.rec.highlight .time { font-family: var(--num); font-style: italic; font-weight: 900; font-size: 44px; line-height: 1.05; letter-spacing: -0.02em; color: var(--lime); }
+.rec.highlight.danger .time { color: #FFB4A8; }
+.rec.highlight .score-label, .rec.highlight .conditions dt, .rec.highlight h3.sub { color: var(--brand-sub); }
+.rec.highlight .meter { background: rgba(255,255,255,0.14); }
+.rec.highlight .meter-fill.good { background: var(--lime); }
+.rec.highlight .conditions div { background: rgba(255,255,255,0.08); }
+.rec.highlight .conditions dd.missing { color: var(--brand-sub); }
+.rec.highlight .cautions { color: #F2D58C; }
+.rec.highlight .rating.good { background: var(--lime); color: var(--on-lime); }
+.score { font-family: var(--num); font-style: italic; font-weight: 900; }
+
+/* 코스 카드 + 미리보기 지도 */
+.card.course { padding: 0; overflow: hidden; border-radius: 24px; }
+.course-body { padding: 14px 16px 12px; }
+.course-body .link-btn { background: none; border: 0; padding: 0; font: inherit; cursor: pointer; display: inline-flex; gap: 4px; color: var(--accent); }
+.distance { font-family: var(--num); font-style: italic; font-weight: 900; color: var(--route); font-size: 1.15rem; }
+
+/* 개략도 지도 */
+.course-map { position: relative; background: var(--map-bg); overflow: hidden; }
+.course-map svg { display: block; width: 100%; height: 100%; }
+.preview-map { height: 170px; }
+.map-badge { position: absolute; top: 10px; right: 10px; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: rgba(255,255,255,0.92); color: #3D4842; }
+.m-park { fill: var(--map-park); }
+.m-fort { fill: var(--map-fort); }
+.m-water { fill: var(--map-water); }
+.m-water-line { stroke: var(--map-water); stroke-width: 14; fill: none; stroke-linecap: round; }
+.m-area { font-size: 12px; font-weight: 700; fill: #5E7A52; }
+.m-casing { fill: none; stroke: #FFFFFF; stroke-width: 12; stroke-linejoin: round; stroke-linecap: round; }
+.m-route { fill: none; stroke: var(--route); stroke-width: 6; stroke-linejoin: round; stroke-linecap: round; }
+.m-route-ring { fill: none; stroke: var(--route); stroke-width: 6; }
+.m-node circle { fill: #0E1512; }
+.m-node text { fill: #FFFFFF; font-family: var(--num); font-style: italic; font-weight: 900; font-size: 11px; }
+.m-node.start circle { fill: var(--lime); stroke: #0E1512; stroke-width: 3; }
+.m-node.start text { fill: var(--on-lime); }
+.m-node text.m-label { font-family: "Noto Sans KR", sans-serif; font-style: normal; font-weight: 700; fill: var(--map-label); stroke: var(--map-halo); stroke-width: 4; paint-order: stroke; }
+.m-empty { font-size: 14px; fill: var(--muted); }
+.course-map.dark { --map-park: #1A2420; --map-fort: #1F2D26; --map-water: #1B2A33; --map-bg: #121815; }
+.course-map.dark .m-casing { stroke: #121815; }
+.course-map.dark .m-route, .course-map.dark .m-route-ring { stroke: var(--lime); }
+.course-map.dark .map-badge { background: rgba(255,255,255,0.1); color: #C9D3CD; }
+
+/* 하단 고정 CTA */
+.cta { width: 100%; min-height: 58px; border: 0; border-radius: 999px; background: var(--lime); color: var(--on-lime); display: flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--num); font-style: italic; font-weight: 900; font-size: 19px; cursor: pointer; }
+.cta:hover { filter: brightness(0.96); }
+.cta-bar { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(14px + env(safe-area-inset-bottom)); background: linear-gradient(to top, var(--ground) 70%, transparent); display: flex; justify-content: center; z-index: 10; }
+.cta-bar .cta { max-width: 488px; box-shadow: 0 6px 20px rgba(14,21,18,0.18); }
+
+/* 전체 화면 공통 */
+.screen { position: relative; min-height: 100vh; max-width: 520px; margin: 0 auto; overflow: hidden; }
+.icon-btn { width: 44px; height: 44px; border-radius: 999px; border: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.icon-btn.floating { position: absolute; top: 16px; left: 16px; background: #FFFFFF; color: #0E1512; box-shadow: 0 1px 4px rgba(14,21,18,0.15); z-index: 2; }
+
+/* 코스 경로 화면 */
+.route-screen { background: var(--map-bg); }
+.route-map { height: 52vh; min-height: 340px; }
+.route-map .map-badge { top: 22px; right: 16px; font-size: 12px; padding: 6px 12px; }
+.sheet { position: relative; margin-top: -28px; background: var(--card); border-radius: 28px 28px 0 0; box-shadow: 0 -6px 24px rgba(14,21,18,0.12); padding: 10px 20px 28px; display: flex; flex-direction: column; gap: 14px; min-height: 48vh; box-sizing: border-box; }
+.sheet-handle { width: 40px; height: 5px; border-radius: 999px; background: var(--line); align-self: center; }
+.course-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+.course-chips .chip { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; }
+.chip-tag { font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 999px; background: var(--lime); color: var(--on-lime); }
+.route-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.route-head h1 { margin: 0; font-size: 26px; font-weight: 900; letter-spacing: -0.02em; }
+.route-head p { margin: 2px 0 0; }
+.big-num { font-family: var(--num); font-style: italic; font-weight: 900; font-size: 44px; line-height: 1; color: var(--accent); white-space: nowrap; }
+.big-num small { font-size: 18px; margin-left: 2px; }
+.waypoints { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; }
+.waypoints li { padding: 4px 10px; border-radius: 999px; background: var(--sunken); }
+.waypoints li.start { background: var(--lime); color: var(--on-lime); font-weight: 700; }
+.sheet .cta { margin-top: auto; }
+
+/* 러닝 중 화면 (항상 어두운 테마) */
+.run-screen { background: #121815; color: #F1F5F2; }
+.run-map { height: 62vh; min-height: 380px; }
+.run-map .map-badge { top: 22px; right: 16px; }
+.run-top { position: absolute; top: 22px; left: 16px; right: 130px; }
+.run-title { display: inline-block; font-weight: 700; font-size: 15px; padding: 6px 12px; border-radius: 999px; background: rgba(18,24,21,0.85); }
+.run-panel { position: relative; margin: -110px 12px 24px; border-radius: 28px; background: #1C2420; border: 1px solid rgba(255,255,255,0.08); padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.run-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.run-row > div { display: flex; flex-direction: column; }
+.run-label { font-size: 12px; color: #A7B3AC; }
+.run-time { font-family: var(--num); font-style: italic; font-weight: 900; font-size: 52px; line-height: 1.05; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.run-time.paused { color: #A7B3AC; }
+.run-toggle { width: 72px; height: 72px; flex: 0 0 auto; border-radius: 999px; border: 0; background: var(--lime); color: var(--on-lime); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.run-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.run-stats > div { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; }
+.run-stat { font-family: var(--num); font-style: italic; font-weight: 900; font-size: 24px; }
+.muted-stat { color: #7F8B84; }
+.run-note { margin: 0; font-size: 12px; color: #A7B3AC; }
+.run-actions { display: flex; gap: 10px; }
+.ghost-btn, .light-btn { flex: 1 1 0; min-height: 52px; border-radius: 999px; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; }
+.ghost-btn { background: transparent; color: #F1F5F2; border: 1px solid rgba(255,255,255,0.3); }
+.light-btn { background: #F1F5F2; color: #0E1512; border: 0; }
+.run-screen :focus-visible { outline-color: var(--lime); }
+@media (max-width: 480px) {
+  .rec.highlight .conditions { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .rec.highlight .conditions dt { font-size: 0.7rem; }
+}
+.run-row > div { min-width: 0; }
+.run-time { font-size: clamp(34px, 11vw, 52px); white-space: nowrap; }
